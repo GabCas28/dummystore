@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgb(125, 125, 125);
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  .title {
+    padding: 0 2vw;
+  }
+  ul {
+    display: flex;
+  }
+  li {
+    padding: 0 2vw;
+    list-style-type: none;
+  }
+}
+.menu {
+  display: flex;
+  align-items: center;
+  padding: 0 2vw;
+}
