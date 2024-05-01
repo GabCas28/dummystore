@@ -1,1 +1,23 @@
-<p>product works!</p>
+<div class="card">
+  <!-- Thumbnail -->
+  <div class="thumbnail">
+    <img [src]="product.thumbnail" />
+  </div>
+
+  <!-- Description -->
+  <div class="summary">
+    <div class="title-wrapper">
+      <!-- Title -->
+      <div class="title">{{product.title}}</div>
+      <!-- Favorite icon -->
+      <i class="fav-icon" [ngClass]="{'fav': isFavorite}">
+        <!-- <img src="assets/img/heart-icon-outline.png" /> -->
+      </i>
+    </div>
+    <!-- Description -->
+    <div class="description">{{product.description}}</div>
+
+    <!-- Price -->
+    <div class="price">{{product.price}} €</div>
+  </div>
+</div>

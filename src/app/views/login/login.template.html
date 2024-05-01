@@ -1,1 +1,44 @@
-<p>login works!</p>
+<app-header></app-header>
+<!-- Log in Form  -->
+
+<div class="form-wrapper">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogIn()">
+    <!-- Email input  -->
+
+    <div class="form-group">
+      <label>Email:</label>
+      <input id="user" type="text" formControlName="user" />
+
+      <!-- Feedback from Email input  -->
+
+      <ul *ngIf="user.touched" class="form-feedback">
+        <li *ngIf="user.errors?.['required']">Email is required.</li>
+        <li *ngIf="user.touched && user.errors?.['email']">Invalid email.</li>
+      </ul>
+    </div>
+
+    <!-- Password input  -->
+
+    <div class="form-group">
+      <label>Password:</label>
+      <input id="password" type="password" formControlName="password" />
+
+      <!-- Feedback from Password input -->
+
+      <ul *ngIf="password.touched" class="form-feedback">
+        <li *ngIf="password.errors?.['required']">Password is required.</li>
+        <li *ngIf="password.errors?.['minlength']">
+          Password must be at least 8 characters long.
+        </li>
+        <li *ngIf="password.errors?.['maxlength']">
+          Password must be at most 32 characters long.
+        </li>
+      </ul>
+    </div>
+
+    <!-- Log In button -->
+    <div class="form-submit">
+      <input id="login" type="submit" [disabled]="!loginForm.valid" value="Log in" />
+    </div>
+  </form>
+</div>

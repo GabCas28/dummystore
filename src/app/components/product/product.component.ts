@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { Product } from '../../interfaces/product.interface';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './product.template.html',
-  styleUrl: './product.styles.css'
+  styleUrl: './product.styles.scss',
 })
 export class ProductComponent {
-
+  @Input() public product: Product = {};
+  @Input() public isFavorite: boolean = false;
 }
