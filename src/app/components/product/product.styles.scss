@@ -2,18 +2,18 @@
   border: 2px solid black;
   display: flex;
   width: 40vw;
-  height: 150px;
+  height: 200px;
   margin: 10px auto;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px 0 rgb(98, 98, 98);
+  box-shadow: 0 4px 8px 0 rgb(157, 157, 157);
 }
 .thumbnail {
   width: 250px;
   border-right: 2px solid black;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 0 4px 0 rgb(0, 0, 0);
+  box-shadow: 0 0 4px 0 rgb(167, 167, 167);
   img {
     margin: auto auto;
     border: none;
@@ -35,6 +35,7 @@
 .title-wrapper {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .description {

@@ -1,20 +1,22 @@
-import { Injectable, inject } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
+import { inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivateFn,
+  Router,
   RouterStateSnapshot,
 } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
-@Injectable()
-class UserToken {}
-
-export const isLoggedInGuard: CanActivateFn = (
+export const isLoggedInGuard = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  // const isLoggedIN = inject(AuthService).canActivate(inject(UserToken), route.params['id'])
-  const isLoggedIN = true;
-  console.log({ isLoggedIN });
-  return isLoggedIN;
+  const router = inject(Router);
+  const authService = inject(AuthService);
+  authService.isLoggedIn().subscribe((isLoggedIn) => {
+    if (!isLoggedIn) {
+      router.navigateByUrl('/login');
+      return false;
+    }
+    return true;
+  });
 };

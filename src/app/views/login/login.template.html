@@ -3,17 +3,18 @@
 
 <div class="form-wrapper">
   <form [formGroup]="loginForm" (ngSubmit)="onLogIn()">
-    <!-- Email input  -->
+
+    <!-- Username input  -->
 
     <div class="form-group">
-      <label>Email:</label>
+      <label>Username:</label>
       <input id="user" type="text" formControlName="user" />
 
-      <!-- Feedback from Email input  -->
+      <!-- Feedback from Username input  -->
 
       <ul *ngIf="user.touched" class="form-feedback">
-        <li *ngIf="user.errors?.['required']">Email is required.</li>
-        <li *ngIf="user.touched && user.errors?.['email']">Invalid email.</li>
+        <li *ngIf="user.errors?.['required']">Username is required.</li>
+        <li *ngIf="user.touched && user.errors?.['email']">Invalid username.</li>
       </ul>
     </div>
 
@@ -36,9 +37,21 @@
       </ul>
     </div>
 
+    <!-- Reset link -->
+    <div class="form-reset">
+      <a href="javascript:void(0)" id="reset" (click)="clearForm()">
+        Reset form
+      </a>
+    </div>
+
     <!-- Log In button -->
     <div class="form-submit">
-      <input id="login" type="submit" [disabled]="!loginForm.valid" value="Log in" />
+      <input
+        id="login"
+        type="submit"
+        [disabled]="!loginForm.valid"
+        value="Log in"
+      />
     </div>
   </form>
 </div>

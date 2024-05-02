@@ -1,7 +1,6 @@
 <app-header></app-header>
-<button (click)="onClick()" > Click me</button>
 <div class="product-list">
-  @for (product of products |async; track $index){
-  <app-product [product]="product"></app-product>
+  @for (prod of products$ |async; track $index){
+  <app-product [product]="prod"></app-product>
   }
 </div>

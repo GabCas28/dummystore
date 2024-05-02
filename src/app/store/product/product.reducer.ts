@@ -1,12 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadProductList } from './product.actions';
-import { ProductState } from './product.state';
+import { ProductsActions } from './product.actions';
+import { ProductState, productAdapter } from './product.state';
 
-export const initialState: ProductState = {
-  products: [],
-};
+export const initialState: ProductState = productAdapter.getInitialState();
 
 export const productsReducer = createReducer(
   initialState,
-  on(loadProductList, (state, { products }) => ({ products: products }))
+  on(ProductsActions.loadProducts, (state, { products }) => {
+    return productAdapter.setAll(products, state);
+  }),
+  on(ProductsActions.editProduct, (state, { product }) => {
+    return productAdapter.upsertOne(product, state);
+  })
 );

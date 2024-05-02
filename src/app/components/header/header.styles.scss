@@ -1,12 +1,12 @@
 .header {
   display: flex;
+  padding: 	0 5vw;
   justify-content: space-between;
   border-bottom: 1px solid;
   position: sticky;
   top: 0;
   background: #ffffff;
-  width: 100%;
-  box-shadow: 0 4px 8px 0 rgb(125, 125, 125);
+  box-shadow: 0 4px 8px 0 rgb(181, 180, 180);
 }
 
 .navigation {
@@ -22,9 +22,24 @@
     padding: 0 2vw;
     list-style-type: none;
   }
+  a {
+    font-weight: bold;
+    text-decoration: none;
+  }
 }
 .menu {
   display: flex;
   align-items: center;
   padding: 0 2vw;
+  a {
+    font-weight: bold;
+    text-decoration: none;
+  }
+}
+
+.nav-link {
+  color: rgb(75, 189, 75);
+  &.active {
+    color: rgb(0, 0, 0);
+  }
 }
