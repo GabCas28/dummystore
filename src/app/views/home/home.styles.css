@@ -1,4 +1,15 @@
 .product-list {
-  width: 70vw;
-  margin: 0 auto;
+  width: 100vw;
+  margin: 0;
+}
+@media (min-width: 700px) {
+  .product-list {
+    width: 80vw;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 900px) {
+  .product-list {
+    width: 70vw;
+  }
 }
