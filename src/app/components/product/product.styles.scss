@@ -1,12 +1,23 @@
 .card {
   border: 2px solid black;
   display: flex;
-  width: 40vw;
-  height: 200px;
+  width: 80vw;
+  height: 250px;
   margin: 10px auto;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px 0 rgb(157, 157, 157);
+}
+@media (min-width: 700px) {
+  .card {
+    width: 60vw;
+    height: 200px;
+  }
+}
+@media (min-width: 900px) {
+  .card {
+    width: 40vw;
+  }
 }
 .thumbnail {
   width: 250px;
@@ -46,7 +57,7 @@
   font-size: large;
   padding: 10px 0 0;
 }
-.fav-icon{
+.fav-icon {
   &::after {
     content: "";
     display: inline-block;
@@ -55,7 +66,7 @@
     background: url(../../../assets/img/heart-icon-outline.png) no-repeat;
     background-size: contain;
   }
-  &.fav::after{
+  &.fav::after {
     background: url(../../../assets/img/heart-icon-fill.png) no-repeat;
     background-size: contain;
   }
