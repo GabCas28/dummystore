@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
 
 import {
   FormControl,
@@ -9,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { HeaderComponent } from '../../components/header/header.component';
+import { ProductService } from '../../services/products/product.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,17 +17,19 @@ import { HeaderComponent } from '../../components/header/header.component';
   imports: [ReactiveFormsModule, CommonModule, HeaderComponent],
   templateUrl: './login.template.html',
   styleUrl: './login.styles.css',
+  providers: [ProductService, AuthService],
 })
 export class LoginComponent {
-  private router: Router;
+  private authService = inject(AuthService);
 
-  constructor(router: Router) {
-    this.router = router;
+  // Reset Inputs to original state
+  public clearForm() {
+    this.loginForm.reset();
   }
 
   // Control and validate the 'Email' input
   public user = new FormControl('', {
-    validators: [Validators.required, Validators.email],
+    validators: [Validators.required],
   });
 
   // Control and validate the 'Password' input
@@ -38,14 +41,15 @@ export class LoginComponent {
     ],
   });
 
-  // Group both inputs inside LoginForm
   public loginForm = new FormGroup({
     user: this.user,
     password: this.password,
   });
 
   public onLogIn() {
-    // Navigate to success view
-    this.router.navigate(['home']);
+    const { user, password } = this.loginForm.value;
+    if (typeof user === 'string' && typeof password === 'string') {
+      this.authService.logIn(user, password).add(() => this.clearForm());
+    }
   }
 }

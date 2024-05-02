@@ -1,2 +1,6 @@
 <app-header></app-header>
-<p>Favorites works!</p>
+<div class="product-list">
+  @for (prod of products$ |async; track $index){
+  <app-product [product]="prod"></app-product>
+  }
+</div>

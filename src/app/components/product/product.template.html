@@ -10,8 +10,11 @@
       <!-- Title -->
       <div class="title">{{product.title}}</div>
       <!-- Favorite icon -->
-      <i class="fav-icon" [ngClass]="{'fav': isFavorite}">
-        <!-- <img src="assets/img/heart-icon-outline.png" /> -->
+      <i
+        class="fav-icon"
+        [ngClass]="{'fav': product.isFavorite}"
+        (click)="onFavorite()"
+      >
       </i>
     </div>
     <!-- Description -->

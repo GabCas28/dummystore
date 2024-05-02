@@ -1,7 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable  } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, catchError, map, pipe, take, throwError } from 'rxjs';
+import { UserActions } from '../../store/user/user.actions';
+import { Router } from '@angular/router';
+import { ProductService } from '../products/product.service';
+import { selectUser } from '../../store/user/user.selectors';
+import { ProductsActions } from '../../store/product/product.actions';
 
 @Injectable()
 class UserToken {}
@@ -10,38 +16,57 @@ class UserToken {}
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(public httpClient: HttpClient) {}
+  private router = inject(Router);
+  private store = inject(Store);
+  private productService = inject(ProductService);
+  private httpClient = inject(HttpClient);
 
-  canActivate(currentUser: UserToken, userId: string): boolean {
-    return true;
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      alert(`An error occurred: ${JSON.stringify(error.error)}`);
+      this.router.navigate(['login']);
+    } else {
+      alert(
+        `Backend returned code ${error.status}, message was:  ${JSON.stringify(
+          error.error
+        )}`
+      );
+      this.router.navigate(['login']);
+    }
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
   }
-  canMatch(currentUser: UserToken): boolean {
-    return true;
-  }
-
   /**
    * Send username and password to log in and receive authentication token.
    */
-  public logIn(): Observable<any[]> {
+  public logIn(username: string, password: string): Subscription {
     return this.httpClient
-      .post(
-        'https://dummyjson.com/auth/login',
-        JSON.stringify({
-          username: 'kminchelle',
-          password: '0lelplR',
-        })
-      )
-      .pipe(map((data: any) => data.json()));
+      .post('https://dummyjson.com/auth/login', {
+        username,
+        password,
+      })
+      .pipe(catchError(this.handleError))
+      .subscribe((user: any) => {
+        this.store.dispatch(UserActions.setUser({ user: user }));
+        sessionStorage.setItem('bearer', user.token);
+        this.productService.getProducts();
+        this.router.navigate(['home']);
+      });
+  }
+  public logOut(): void {
+    this.store.dispatch(UserActions.setUser({ user: {} }));
+    this.store.dispatch(ProductsActions.loadProducts({ products: [] }));
+    sessionStorage.setItem('bearer', 'undefined');
+    this.router.navigate(['login']);
   }
 
-  /**
-   * Send token to refresh its duration before it expires.
-   */
-  public refreshToken(): Observable<any[]> {
-    return this.httpClient
-      .get(
-        'https://services.odata.org/TripPinRESTierService/%28S%28j1rncy232ruwwt3enbdp2ajy%29%29/People'
-      )
-      .pipe(map((data: any) => data.value));
+  public isLoggedIn(): Observable<Boolean> {
+    return this.store.select(selectUser).pipe(
+      take(1),
+      map((user) => {
+        return !!user && !!user.token && user.token != 'undefined';
+      })
+    );
   }
 }

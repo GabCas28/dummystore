@@ -1,15 +1,28 @@
 <nav class="header">
-  <div class="navigation">
-    <h3 class="title">DummyStore</h3>
-    <nav>
-      <ul>
-        <li><a href="home">Home</a></li>
-        <li><a href="favorites">Favourites</a></li>
-      </ul>
-    </nav>
-  </div>
+  <!--  Left side title and links -->
+  <nav class="navigation">
+    <ul>
+      <li class="nav-link" routerLinkActive="active" routerLink="/home">
+        <a>Home</a>
+      </li>
+      <li class="nav-link" routerLinkActive="active" routerLink="/favorites">
+        <a>Favourites</a>
+      </li>
+    </ul>
+  </nav>
 
+  <!--  Right side link -->
   <div class="menu">
-    <a href="login">Log In</a>
+    @if(isLoggedIn$ | async){
+    <a
+      class="nav-link"
+      routerLinkActive="active"
+      routerLink="'/login"
+      (click)="logOut()"
+      >{{(user$ | async)?.username}} - Log out</a
+    >
+    }@else{
+    <a class="nav-link" routerLinkActive="active" routerLink="/login">Log In</a>
+    }
   </div>
 </nav>

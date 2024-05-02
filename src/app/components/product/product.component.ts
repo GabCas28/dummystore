@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../interfaces/product.interface';
+import { Store } from '@ngrx/store';
+import { ProductsActions } from '../../store/product/product.actions';
 
 @Component({
   selector: 'app-product',
@@ -10,6 +12,11 @@ import { Product } from '../../interfaces/product.interface';
   styleUrl: './product.styles.scss',
 })
 export class ProductComponent {
-  @Input() public product: Product = {};
-  @Input() public isFavorite: boolean = false;
+  @Input() public product: Product = { id: 0 };
+  private store = inject(Store);
+
+  public onFavorite() {
+    this.product = { ...this.product, isFavorite: !this.product.isFavorite };
+    this.store.dispatch(ProductsActions.editProduct({ product: this.product }));
+  }
 }
