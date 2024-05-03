@@ -13,7 +13,7 @@ import { ProductsActions } from '../../store/product/product.actions';
 })
 export class ProductComponent {
   @Input() public product: Product = { id: 0 };
-  private store = inject(Store);
+  public store = inject(Store);
 
   public onFavorite() {
     this.product = { ...this.product, isFavorite: !this.product.isFavorite };
